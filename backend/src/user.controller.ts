@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { PrismaService } from './prisma/prisma.service';
-import { error } from 'console';
 
 @Controller('user')
 export class UserController {
@@ -72,8 +71,6 @@ export class UserController {
   async handleGetData(@Req() req: any) {
     const token = req.cookies['token'];
     const decoded = await this.authService.verifyToken(token);
-    console.log('decoded', decoded);
-    console.log('Expires at:', new Date(decoded.exp * 1000).toUTCString());
 
     const data = await this.prisma.user.findUnique({
       where: { userId: decoded.sub },

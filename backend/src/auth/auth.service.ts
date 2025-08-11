@@ -41,17 +41,12 @@ export class AuthService {
       username: username,
     });
 
-    console.log('token', token);
-
     return { access_token: token };
   }
 
   async verifyToken(token: string) {
     try {
       if (!token) return null;
-      console.log('token', token);
-      console.log('JWT_SECRET present?', !!process.env.JWT_SECRET);
-
       // Use module-configured verification (will throw on invalid/expired)
       return this.jwtService.verify(token);
     } catch (err: any) {
