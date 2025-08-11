@@ -23,7 +23,7 @@ export default function LoginForm() {
 
   const { mutateAsync } = useMutation({
     mutationFn: handleLogin,
-    onSuccess(data: any) {
+    onSuccess() {
       router.replace("/home");
     },
     onError(error: any) {
