@@ -36,11 +36,6 @@ const AuthPage: React.FC = () => {
           }}
         />
       ))}
-
-      {/* Glass form container */}
-      {/* <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-purple-400 to-pink-500 text-center mb-6">
-        Login to TypeWise
-      </h2> */}
       <Form />
     </div>
   );

@@ -88,7 +88,6 @@ export default function SearchBar() {
             <SearchIcon className="h-5 w-5" />
           </Button>
         </div>
-
         {/* Loading Skeleton */}
         {isLoading && (
           <div className="mt-6 space-y-3 w-full">
@@ -144,7 +143,6 @@ export default function SearchBar() {
             ))}
           </div>
         )}
-
         {/* No Results */}
         {data && data.users.length === 0 && !isLoading && (
           <div className="mt-14 text-center text-white font-bold text-3xl">

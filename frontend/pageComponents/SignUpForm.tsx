@@ -44,7 +44,6 @@ export default function SignUpForm() {
       });
     },
   });
-
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
     const { username, password } = data;
     if (username.length < 5) {

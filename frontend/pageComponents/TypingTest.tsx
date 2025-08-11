@@ -150,7 +150,6 @@ export default function TypingTest({
       finishTest((Date.now() - (startedAt ?? Date.now())) / 1000);
     }
   }
-
   function handleRestart() {
     setCurrentText(getRandomText);
     setPosition(0);

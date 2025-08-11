@@ -30,14 +30,11 @@ export default function ProfilePage() {
       accuracy: accuracyArr[originalIndex] ?? null,
     };
   });
-  console.log("extracted", extracted);
 
   const highestWPM = data?.scores?.length ? Math.max(...data?.scores) : 0;
   const highestAccuracy = data?.accuracy?.length
     ? Math.max(...data?.accuracy)
     : 0;
-
-  console.log(extracted, highestAccuracy, highestWPM);
 
   return (
     <>

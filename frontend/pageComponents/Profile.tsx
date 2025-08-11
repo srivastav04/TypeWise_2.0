@@ -12,6 +12,7 @@ export default function Profile() {
   });
 
   // take at most the first 20 scores
+
   const MAX = 20;
 
   const scores = data?.scores ?? [];
@@ -30,8 +31,6 @@ export default function Profile() {
   const highestAccuracy = data?.accuracy.length
     ? Math.max(...data?.accuracy)
     : 0;
-
-  console.log(extracted, highestAccuracy, highestWPM);
 
   if (isLoading || !data) return <div>Loading...</div>;
   if (error) return <div>Something went wrong.</div>;
