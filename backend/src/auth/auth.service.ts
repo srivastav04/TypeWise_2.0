@@ -6,10 +6,7 @@ import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private jwtService: JwtService,
-    private readonly prisma: PrismaService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
   async signup(username: string, password: string) {
     const existing = await this.prisma.user.findUnique({
@@ -26,7 +23,7 @@ export class AuthService {
     const id = randomUUID().slice(0, 4);
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await this.prisma.user.create({
+    const user = await this.prisma.user.create({
       data: {
         userId: id,
         username,
@@ -35,32 +32,7 @@ export class AuthService {
       },
     });
 
-    // Use JwtModule defaults (secret + signOptions configured in module)
-    const token = this.jwtService.sign({
-      sub: id,
-      username: username,
-    });
-
-    return { access_token: token };
-  }
-
-  async verifyToken(token: string) {
-    try {
-      if (!token) return null;
-      // Use module-configured verification (will throw on invalid/expired)
-      return this.jwtService.verify(token);
-    } catch (err: any) {
-      // Distinguish expired tokens from other errors
-      if (err.name === 'TokenExpiredError') {
-        console.error(
-          'JWT verify error: TokenExpiredError, expiredAt =',
-          err.expiredAt,
-        );
-      } else {
-        console.error('JWT verify error:', err);
-      }
-      return null;
-    }
+    return user.userId;
   }
 
   async validateUser(username: string, password: string) {
@@ -79,14 +51,5 @@ export class AuthService {
           username,
         },
       };
-  }
-
-  async login(user: any) {
-    const payload = { sub: user.id, username: user.username };
-
-    // Use JwtModule defaults so signOptions (expiresIn) are applied
-    const access_token = this.jwtService.sign(payload);
-
-    return { access_token };
   }
 }

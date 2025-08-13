@@ -7,12 +7,15 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { handleLogin } from "@/apiFunctions";
 import { useRouter } from "next/navigation";
+import useStore from "@/store";
 export type FormValues = {
   username: string;
   password: string;
 };
 
 export default function LoginForm() {
+  const setIsLoggedIn = useStore((state) => state.setIsLoggedIn);
+  const setId = useStore((state) => state.setId);
   const router = useRouter();
   const {
     register,
@@ -23,8 +26,13 @@ export default function LoginForm() {
 
   const { mutateAsync } = useMutation({
     mutationFn: handleLogin,
-    onSuccess() {
-      router.replace("/home");
+    onSuccess(data) {
+      const { status, id } = data;
+      if (status) {
+        setIsLoggedIn(true);
+        setId(id);
+        router.replace("/home");
+      }
     },
     onError(error: any) {
       if (!error) return;

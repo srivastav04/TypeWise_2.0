@@ -1,5 +1,4 @@
-import SearchBar from "@/pageComponents/Search";
-
-export default function SearchPage() {
-  return <SearchBar />;
+import SearchPage from "@/pages/SearchPage";
+export default function Search() {
+  return <SearchPage />;
 }

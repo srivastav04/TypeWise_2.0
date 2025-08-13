@@ -185,7 +185,6 @@ export default function TypingTest({
     setPendingCustomTime(val);
     setTimeSelection(String(val)); // important: select will match an <option>
     setMode({ duration: val });
-    handleRestart(); // restart with new time
   }
 
   // helper to check if a value matches base options

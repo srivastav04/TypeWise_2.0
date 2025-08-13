@@ -9,9 +9,13 @@ import { useMutation } from "@tanstack/react-query";
 import { handleSignUp } from "@/apiFunctions";
 import { FormValues } from "./LoginForm";
 import { useRouter } from "next/navigation";
+import useStore from "@/store";
+import { log } from "util";
 
 export default function SignUpForm() {
   const router = useRouter();
+  const setIsLoggedIn = useStore((state) => state.setIsLoggedIn);
+  const setId = useStore((state) => state.setId);
   const {
     register,
     handleSubmit,
@@ -22,7 +26,12 @@ export default function SignUpForm() {
   const { mutateAsync } = useMutation({
     mutationFn: handleSignUp,
     onSuccess(data) {
-      router.replace("/home");
+      const { status, id } = data;
+      if (status) {
+        setIsLoggedIn(true);
+        setId(id);
+        router.push("/home");
+      }
     },
     onError(error: any) {
       console.log("ERROR", error.error);

@@ -3,10 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserData } from "@/apiFunctions";
 import { useParams } from "next/navigation";
 import { Component } from "./Chart";
+import LoadingPage from "./Loading";
 
 export default function ProfilePage() {
-  const { id } = useParams();
-  const userId = String(id);
+  const params = useParams<{ id: string }>();
+  const userId = params?.id;
+
+  if (!userId) {
+    return <LoadingPage />;
+  }
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["user-data"],

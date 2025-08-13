@@ -4,14 +4,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 import { Component } from "./Chart";
+import useStore from "@/store";
 
 export default function Profile() {
+  const id = useStore((state) => state.id);
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["data"],
-    queryFn: handleGetData,
+    queryFn: () => handleGetData(id),
   });
-
-  // take at most the first 20 scores
 
   const MAX = 20;
 

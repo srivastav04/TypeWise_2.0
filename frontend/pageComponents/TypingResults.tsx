@@ -3,6 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { handleData } from "@/apiFunctions";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import useStore from "@/store";
 
 interface TypingResultsProps {
   wpm: number;
@@ -21,8 +22,10 @@ export default function TypingResults({
   elapsed,
   restartTest,
 }: TypingResultsProps) {
+  const id = useStore((state) => state.id);
+
   const { mutateAsync, isPending } = useMutation({
-    mutationFn: () => handleData({ wpm, accuracy }),
+    mutationFn: () => handleData({ wpm, accuracy, id }),
     onSuccess() {
       console.log("successful");
     },

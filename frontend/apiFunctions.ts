@@ -8,7 +8,6 @@ export const handleLogin = async (data: FormValues) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: true,
     });
 
     return res.data;
@@ -32,26 +31,12 @@ export const handleSignUp = async (data: FormValues) => {
   }
 };
 
-export const handleLogout = async () => {
-  await axios.post(
-    `${URL}/auth/logout`,
-    {},
-    {
-      withCredentials: true,
-    }
-  );
-};
-
 export const handleData = async (data: any) => {
-  await axios.post(`${URL}/user/data`, data, {
-    withCredentials: true,
-  });
+  await axios.post(`${URL}/user/data`, data);
 };
 
-export const handleGetData = async () => {
-  const res = await axios.get(`${URL}/user/data`, {
-    withCredentials: true,
-  });
+export const handleGetData = async (id: string) => {
+  const res = await axios.get(`${URL}/user/data/${id}`);
 
   return res.data.data;
 };

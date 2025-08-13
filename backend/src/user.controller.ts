@@ -3,7 +3,6 @@ import {
   Body,
   Controller,
   Get,
-  Headers,
   HttpException,
   HttpStatus,
   InternalServerErrorException,
@@ -24,19 +23,15 @@ export class UserController {
 
   @Post('data')
   async handleData(
-    @Body() body: { wpm: string; accuracy: string },
+    @Body() body: { wpm: string; accuracy: string; id: string },
     @Req() req: any,
   ) {
-    const { accuracy, wpm } = body;
-    const token = req.cookies['token'];
-    const decoded = await this.authService.verifyToken(token);
-    console.log('decoded', decoded);
-    console.log('body', body);
+    const { accuracy, wpm, id } = body;
+
     const userData = await this.prisma.user.findUnique({
-      where: { userId: decoded.sub },
+      where: { userId: id },
     });
-    console.log('uesr', userData);
-    if (userData && decoded) {
+    if (userData) {
       const newScores = [...userData.scores, Number(wpm)];
       const newAccuracy = [...userData.accuracy, Number(accuracy)];
       const newTotalTests = userData.totalTests + 1;
@@ -48,7 +43,7 @@ export class UserController {
         newTotalTests;
 
       await this.prisma.user.update({
-        where: { userId: decoded.sub },
+        where: { userId: id },
         data: {
           totalTests: newTotalTests,
           scores: newScores,
@@ -67,13 +62,10 @@ export class UserController {
     return { message: 'Data received' };
   }
 
-  @Get('data')
-  async handleGetData(@Req() req: any) {
-    const token = req.cookies['token'];
-    const decoded = await this.authService.verifyToken(token);
-
+  @Get('data/:id')
+  async handleGetData(@Req() req: any, @Param('id') id: string) {
     const data = await this.prisma.user.findUnique({
-      where: { userId: decoded.sub },
+      where: { userId: id },
     });
     if (data) return { data };
     else

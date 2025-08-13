@@ -1,6 +1,6 @@
-import ProfilePage from "@/pageComponents/ProfilePage";
+import OtherProfilePage from "@/pages/OtherProfilePage";
 import React from "react";
 
 export default function Profile() {
-  return <ProfilePage />;
+  return <OtherProfilePage />;
 }
