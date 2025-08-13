@@ -11,7 +11,7 @@ import useStore from "@/store";
 export default function HomePage() {
   const isLoggedIn = useStore((state) => state.isLoggedIn);
   const router = useRouter();
-  const hasHydrated = useStore.persist.hasHydrated();
+  const hasHydrated = useStore.persist?.hasHydrated();
 
   const [loading, setLoading] = useState(true);
 
