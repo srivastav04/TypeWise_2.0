@@ -6,23 +6,34 @@ import SearchBar from "@/pageComponents/Search";
 import LoadingPage from "@/pageComponents/Loading";
 
 export default function SearchPage() {
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const hasHydrated =
-    typeof useStore.persist?.hasHydrated === "function"
-      ? useStore.persist.hasHydrated()
-      : false;
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
   useEffect(() => {
-    if (hasHydrated && !isLoggedIn) {
-      router.replace("/login");
+    if (typeof useStore.persist?.hasHydrated === "function") {
+      const unsub = useStore.persist.onFinishHydration(() => {
+        setHasHydrated(true);
+      });
+      // If already hydrated
+      if (useStore.persist.hasHydrated()) {
+        setHasHydrated(true);
+      }
+      return unsub;
     } else {
-      setLoading(false);
+      setHasHydrated(true);
     }
-  }, [isLoggedIn, router]);
+  }, []);
 
-  if (loading || !hasHydrated) {
+  useEffect(() => {
+    if (!hasHydrated) return;
+    if (!isLoggedIn) {
+      router.replace("/login");
+    }
+  }, [isLoggedIn, hasHydrated, router]);
+
+  if (!hasHydrated) {
     return <LoadingPage />;
   }
+
   return <SearchBar />;
 }

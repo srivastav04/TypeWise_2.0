@@ -5,6 +5,7 @@ import { useEffect } from "react";
 
 import { Component } from "./Chart";
 import useStore from "@/store";
+import LoadingPage from "./Loading";
 
 export default function Profile() {
   const id = useStore((state) => state.id);
@@ -33,7 +34,7 @@ export default function Profile() {
     ? Math.max(...data?.accuracy)
     : 0;
 
-  if (isLoading || !data) return <div>Loading...</div>;
+  if (isLoading || !data) return <LoadingPage />;
   if (error) return <div>Something went wrong.</div>;
 
   return (

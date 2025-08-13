@@ -1,4 +1,3 @@
-// HomePage.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -9,21 +8,34 @@ import LoadingPage from "@/pageComponents/Loading";
 import useStore from "@/store";
 
 export default function HomePage() {
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
   const router = useRouter();
-  const hasHydrated = useStore.persist?.hasHydrated();
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
 
-  const [loading, setLoading] = useState(true);
+  // ✅ Wait for Zustand to hydrate before running any logic
+  useEffect(() => {
+    if (typeof useStore.persist?.hasHydrated === "function") {
+      const unsub = useStore.persist.onFinishHydration(() => {
+        setHasHydrated(true);
+      });
+      // If already hydrated
+      if (useStore.persist.hasHydrated()) {
+        setHasHydrated(true);
+      }
+      return unsub;
+    } else {
+      setHasHydrated(true);
+    }
+  }, []);
 
   useEffect(() => {
-    if (hasHydrated && !isLoggedIn) {
+    if (!hasHydrated) return;
+    if (!isLoggedIn) {
       router.replace("/login");
-    } else {
-      setLoading(false);
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, hasHydrated, router]);
 
-  if (loading || !hasHydrated) {
+  if (!hasHydrated) {
     return <LoadingPage />;
   }
 

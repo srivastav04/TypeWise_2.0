@@ -6,23 +6,32 @@ import Profile from "@/pageComponents/Profile";
 import LoadingPage from "@/pageComponents/Loading";
 
 export default function UserProfilePage() {
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
   const router = useRouter();
-  const hasHydrated =
-    typeof useStore.persist?.hasHydrated === "function"
-      ? useStore.persist.hasHydrated()
-      : false;
-  const [loading, setLoading] = useState(true);
+  const [hasHydrated, setHasHydrated] = useState(false);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
 
   useEffect(() => {
-    if (hasHydrated && !isLoggedIn) {
-      router.replace("/login");
+    if (typeof useStore.persist?.hasHydrated === "function") {
+      const unsub = useStore.persist.onFinishHydration(() => {
+        setHasHydrated(true);
+      });
+      if (useStore.persist.hasHydrated()) {
+        setHasHydrated(true);
+      }
+      return unsub;
     } else {
-      setLoading(false);
+      setHasHydrated(true);
     }
-  }, [hasHydrated, isLoggedIn, router]);
+  }, []);
 
-  if (loading || !hasHydrated) {
+  useEffect(() => {
+    if (!hasHydrated) return;
+    if (!isLoggedIn) {
+      router.replace("/login");
+    }
+  }, [isLoggedIn, hasHydrated, router]);
+
+  if (!hasHydrated) {
     return <LoadingPage />;
   }
 

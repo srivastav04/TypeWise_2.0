@@ -3,7 +3,7 @@ export const tests = [
   "Who is gonna be last on the brakes leclerc has that inside line perez goes off the track cuts the chicane off goes leclerc through goes hamilton unbelievable stuff",
   "We are humans not fish we do not know what kind of people we truly are until the moment before our deaths as death comes you will realize what you are that is what death is an answer to the question of what you are",
   "Wake up to reality nothing ever goes as planned in this accursed world the longer you live the more you realize that the only things that truly exist in this reality are merely pain suffering and futility",
-  "I am not the only traveler who has not repaid his debt i have been searching for a trail to follow again take me back to the night we met And then i can tell myself what the hell im supposed to do and then I can tell myself not to ride along with you",
+  "I am not the only traveler who has not repaid his debt i have been searching for a trail to follow again take me back to the night we met and then i can tell myself what the hell im supposed to do and then I can tell myself not to ride along with you",
   "Learning to type accurately builds confidence each mistake teaches a lesson speed follows precision practice patience and persistence always win mastery arrives slowly but surely never by chance",
   "When hands dance across the keyboard like music notes in motion typing transforms into art speed follows serenity and accuracy grows from the calm mind of the typist",
   "Roronoa Zoro is one of the most important pirates in the world of one piece despite his horrible sense of direction he possesses a unique perspective and a surprising amount of wisdom that has been integral in moving the crew forward",
