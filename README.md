@@ -31,7 +31,7 @@ This version reimplements the original TypeWise using a modern TypeScript-first 
 
 ## Features
 - Preset timers (e.g., 15s, 30s, 60s) and custom timer input.
-- Accuracy-first mode (type every word correctly to finish).
+- New attribute Accuracy.
 - Hybrid scoring mode combining WPM and accuracy.
 - Stats page: session history, accuracy trends, and best scores.
 - Search users with basic endpoint for discoverability.
