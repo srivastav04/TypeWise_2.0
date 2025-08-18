@@ -19,7 +19,7 @@ export default function ProfilePage() {
     enabled: !!userId,
   });
 
-  if (isLoading || !data) return <div>Loading...</div>;
+  if (isLoading || !data) return <LoadingPage />;
   if (error) return <div>Something went wrong.</div>;
 
   const MAX = 20;
